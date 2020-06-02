@@ -2,7 +2,6 @@
 
 
 #include "PlayableCharacterBase.h"
-
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -21,13 +20,11 @@ APlayableCharacterBase::APlayableCharacterBase()
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
 
-
 	GetCharacterMovement()->bOrientRotationToMovement = true; 
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 540.0f, 0.0f);
 	GetCharacterMovement()->JumpZVelocity = 600.f;
 	GetCharacterMovement()->AirControl = 0.2f;
 
-	
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
 	CameraBoom->TargetArmLength = 300.0f; 
@@ -39,14 +36,12 @@ APlayableCharacterBase::APlayableCharacterBase()
 
 	FollowCamera->PostProcessSettings.bOverride_AutoExposureMethod = true;
 	FollowCamera->PostProcessSettings.AutoExposureMethod = AEM_Manual;
-
 }
 
 UAnimMontage* APlayableCharacterBase::GetNextAttackMontage()
 {
 	if (AnimationList.Num() > 0)
 	{
-		
 		TArray<UAnimMontage*> AvailableMontages = AnimationList.FilterByPredicate([this](const UAnimMontage* montage)
 		{
 			return montage != this->LastPlayerAttackAnimation;
@@ -58,10 +53,7 @@ UAnimMontage* APlayableCharacterBase::GetNextAttackMontage()
 		LastPlayerAttackAnimation = NextMontage;
 		return NextMontage;	
 	}
-
 	return nullptr;
-	
-
 }
 
 void APlayableCharacterBase::OnAttackFinished()
@@ -83,13 +75,13 @@ void APlayableCharacterBase::BeginPlay()
 void APlayableCharacterBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	 ChangeSprintSpeed(DeltaTime);
+	ChangeSprintSpeed(DeltaTime);
 
 }
 
 void APlayableCharacterBase::MoveRight(float Value)
 {
-	if ((Controller != NULL) && (Value != 0.0f))
+	if ((Controller != nullptr) && (Value != 0.0f))
 	{
 		// find out which way is right
 		const FRotator Rotation = Controller->GetControlRotation();
@@ -101,8 +93,6 @@ void APlayableCharacterBase::MoveRight(float Value)
 		AddMovementInput(Direction, Value);
 	}
 }
-
-
 
 void APlayableCharacterBase::ChangeSprintSpeed(float DeltaTime)
 {
